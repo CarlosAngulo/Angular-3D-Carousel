@@ -2,6 +2,10 @@
     position: absolute;
     width: 485px;
     height: 300px;
+    cursor: pointer;
+    border-radius: 12px;
+    box-shadow: 0 0 14px 6px rgba(255, 0, 0, 0);
+    transition: box-shadow 0.3s ease-out;
 }
 
 :host:after {
@@ -15,6 +19,10 @@
     background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.2) 0%,rgba(0, 0, 0, 0) 90%);
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%,rgba(0, 0, 0, 0) 90%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#55ffff', endColorstr='#00ffffff',GradientType=0 );
+}
+
+:host:hover {
+    box-shadow: 0 0 14px 6px rgba(255, 0, 0, 0.3);
 }
 
 .background {

@@ -8,25 +8,13 @@ import { CardComponent } from './card/card.component';
   styleUrls: ['./carousel.component.css']
 })
 export class CarouselComponent implements AfterViewInit {
-
-  items = [
-    { title: 'Slide 1' },
-    { title: 'Slide 2' },
-    { title: 'Slide 3' },
-    { title: 'Slide 4' },
-    { title: 'Slide 5' },
-    { title: 'Slide 6' },
-    { title: 'Slide 7' },
-    { title: 'Slide 8' },
-  ];
-
-  offsets = [-2, -1, 1, 2];
-
-  timing = '400ms ease-out';
   @ViewChildren('withBuilder') cards: QueryList<CardComponent>;
   @ViewChildren('withBuilder', {read: ElementRef}) elCards: QueryList<ElementRef>;
   @ViewChild('withBuilder', {read: ElementRef}) baseCard: ElementRef;
   @ViewChild('box', {read: ElementRef}) box: ElementRef;
+  private items = new Array(8);
+  private speed = 400;
+  private timing = this.speed + 'ms ease-out';
   private player: AnimationPlayer;
   private player2: AnimationPlayer;
   private parentNode: ElementRef;
@@ -60,32 +48,10 @@ export class CarouselComponent implements AfterViewInit {
     this.cardBaseSize.width = this.baseCard.nativeElement.clientWidth;
     this.cardBaseSize.height = this.baseCard.nativeElement.clientHeight;
     this.propCanvasCard = this.canvasSize.width / this.cardBaseSize.width;
-    console.log( this.propCanvasCard, this.canvasSize.height / this.cardBaseSize.height, '<<<<');
-    this.createAnimation(0);
+    this.createAnimation(0, false);
   }
 
-  public animateBox(offset) {
-    this.createAnimation(offset);
-    this.boxAngle += offset;
-    if (this.player2) {
-      this.player2.destroy();
-    }
-    const animation2 = this.animationBuilder.build([
-      animate(this.timing, style({transform: `rotate(${this.boxAngle * 45}deg)`}))
-    ]);
-    this.player2 = animation2.create(this.box.nativeElement);
-    this.player2.play();
-    const timer = setInterval(() => {
-      console.log(this.box.nativeElement.style.transform, this.player2.getPosition());
-    }, 17);
-    this.player2.onDone(() => {
-      clearInterval(timer);
-      this.box.nativeElement.style.transform = `rotate(${this.boxAngle * 45}deg)`;
-    });
-  }
-
-  public createAnimation(offset) {
-    console.log('offset:', offset, 'angle: ', this.angle);
+  public createAnimation(offset: number, repeat: boolean) {
     if (this.player) {
       this.player.destroy();
     }
@@ -105,23 +71,20 @@ export class CarouselComponent implements AfterViewInit {
           position = 1;
         break;
       }
-      console.log('card: ', offset, key, position);
       this.cardsArr[key].positionChange(position);
       const coords = this.calculateCoords(this.angle + position);
+      card.nativeElement.style.zIndex = Math.round((coords.z + 1) * 100);
       const animation = this.buildAnimation(coords);
       this.player = animation.create(card.nativeElement);
-      card.nativeElement.style.zIndex = Math.round((coords.z + 1) * 100);
       this.player.play();
       this.player.onDone(() => {
         card.nativeElement.style.transform =
           `translate(${coords.x}px, ${coords.y}px) scale(${(coords.z + 1) * this.propCanvasCard * 0.2 })`;
       });
     });
-  }
-
-  public moveCarousel(event: any, position: number) {
-    console.log(position);
-    this.createAnimation(position);
+    if (repeat === true) {
+      setTimeout(() => this.createAnimation(offset, false), this.speed + 20);
+    }
   }
 
   private calculateCoords (index) {
@@ -144,28 +107,23 @@ export class CarouselComponent implements AfterViewInit {
   }
 
   public onCardClick(i: number) {
-    console.log(this.cardsArr[i].position);
-    let positionsToMove = 0;
     switch (this.cardsArr[i].position) {
       case 0:
-        positionsToMove = 2;
-        this.timing = '700ms ease-out';
+        this.createAnimation(1, true);
       break;
       case 1:
-        positionsToMove = 1;
-        this.timing = '350ms ease-out';
+        this.createAnimation(1, false);
         break;
       case 3:
-        positionsToMove = -1;
-        this.timing = '350ms ease-out';
+        this.createAnimation(-1, false);
         break;
       case 4:
-        positionsToMove = -2;
-        this.timing = '700ms ease-out';
+        this.createAnimation(-1, true);
         break;
     }
-    if (positionsToMove !== 0) {
-      this.createAnimation(positionsToMove);
-    }
+  }
+
+  onResize() {
+    this.proportions();
   }
 }

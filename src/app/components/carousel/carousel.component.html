@@ -3,9 +3,6 @@
     *ngFor="let item of items; let i = index" 
     [index]="i"
     [position]="i"
-    (click)="onCardClick(i)">
+    (click)="onCardClick(i)"
+    (window:resize)="onResize($event)">
 </app-card>
-
-<!--div class="box" #box></div>
-
-<button *ngFor="let offset of offsets" (click)="animateBox(offset)">{{offset}}</button-->
