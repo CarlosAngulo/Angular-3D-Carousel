@@ -1,0 +1,11 @@
+<app-card 
+    #withBuilder
+    *ngFor="let item of items; let i = index" 
+    [index]="i"
+    (click)="onCardClick(i)"
+    (currentPosition)="onCardClick($event)">
+</app-card>
+
+<div class="box" #box></div>
+
+<button *ngFor="let item of items; let i = index" (click)="animateBox(i)">{{i*45}}</button>
