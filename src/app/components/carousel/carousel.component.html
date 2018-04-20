@@ -2,5 +2,10 @@
     #withBuilder
     *ngFor="let item of items; let i = index" 
     [index]="i"
-    (currentPosition)="onCardClick($event)">
+    [position]="i"
+    (click)="onCardClick(i)">
 </app-card>
+
+<!--div class="box" #box></div>
+
+<button *ngFor="let offset of offsets" (click)="animateBox(offset)">{{offset}}</button-->

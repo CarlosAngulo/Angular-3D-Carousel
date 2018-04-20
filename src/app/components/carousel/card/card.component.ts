@@ -5,38 +5,43 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css']
 })
+
 export class CardComponent implements OnInit {
   @Input() index: string;
-  @Input() position: number;
   @Output() currentPosition: EventEmitter<number> = new EventEmitter<number>();
+  @Input() position: number;
   cardName: string;
 
   constructor() { }
-  
+
   ngOnInit() {
     this.cardName = 'Title ' + this.index;
   }
 
-  onClick(evt:any) {
+  get cardPosition() {
+    return this.position;
+  }
+
+  positionChange(position) {
+    this.position = position;
     let positionsToMove = 0;
-    switch(this.position) {
+    switch (position) {
+      case 1:
+        positionsToMove = 1;
+      break;
+      case 4:
+        positionsToMove = -2;
+        break;
       case 0:
         positionsToMove = 2;
       break;
-      case 1:
-        positionsToMove = 1;
-        break;
-      case 4:
+      case 3:
         positionsToMove = -1;
         break;
-      case 5:
-        positionsToMove = -2;
-        break;
-      default:
-        positionsToMove = 0;
-      break;
     }
-    this.currentPosition.emit(positionsToMove);
+    if (positionsToMove !== 0) {
+      this.currentPosition.emit(positionsToMove);
+    }
   }
 
 }

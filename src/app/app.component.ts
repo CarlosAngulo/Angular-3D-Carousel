@@ -18,7 +18,7 @@ export class AppComponent {
     { title: 'Slide 6' },
     { title: 'Slide 7' },
     { title: 'Slide 8' },
-  ]
+  ];
 
   constructor( ) {
   }
