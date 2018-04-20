@@ -16,7 +16,6 @@ export class CarouselComponent implements AfterViewInit {
   private speed = 400;
   private timing = this.speed + 'ms ease-out';
   private player: AnimationPlayer;
-  private player2: AnimationPlayer;
   private parentNode: ElementRef;
   private centerCoords = {x: 0, y: 0};
   private radius = 0;
@@ -24,8 +23,6 @@ export class CarouselComponent implements AfterViewInit {
   private cardBaseSize = {width: 0, height: 0};
   private propCanvasCard = 0;
   private cardsArr = [];
-  private angle = 0;
-  private boxAngle = 0;
 
   constructor( private animationBuilder: AnimationBuilder, private elementRef: ElementRef) {
   }
@@ -72,7 +69,7 @@ export class CarouselComponent implements AfterViewInit {
         break;
       }
       this.cardsArr[key].positionChange(position);
-      const coords = this.calculateCoords(this.angle + position);
+      const coords = this.calculateCoords(position);
       card.nativeElement.style.zIndex = Math.round((coords.z + 1) * 100);
       const animation = this.buildAnimation(coords);
       this.player = animation.create(card.nativeElement);
