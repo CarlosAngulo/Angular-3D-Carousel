@@ -75,8 +75,7 @@ export class CarouselComponent implements AfterViewInit {
       this.player = animation.create(card.nativeElement);
       this.player.play();
       this.player.onDone(() => {
-        card.nativeElement.style.transform =
-          `translate(${coords.x}px, ${coords.y}px) scale(${(coords.z + 1) * this.propCanvasCard * 0.2 })`;
+        card.nativeElement.style.transform = this.applyStyle( coords ).transform;
       });
     });
     if (repeat === true) {
@@ -96,11 +95,12 @@ export class CarouselComponent implements AfterViewInit {
       coords.z = 0;
     }
     return this.animationBuilder.build([
-      animate(this.timing, style({
-        transform: `translate(${coords.x}px, ${coords.y}px) scale(${(coords.z + 1) * this.propCanvasCard * 0.2 })`
-        // transform: `translate(${coords.x}px, ${coords.y}px) scale(0.5)`
-      }))
+      animate(this.timing, style( this.applyStyle( coords )))
     ]);
+  }
+
+  private applyStyle( coords ) {
+    return { transform: `translate(${coords.x}px, ${coords.y}px) scale(${(coords.z + 1) * this.propCanvasCard * 0.2 })` };
   }
 
   public onCardClick(i: number) {
