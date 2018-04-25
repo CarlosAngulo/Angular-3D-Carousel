@@ -18,4 +18,7 @@ export class ProfileService {
     this.collection.add(JSON.parse(JSON.stringify(card)));
   }
 
+  deleteUserCard(email: string) {
+  }
+
 }

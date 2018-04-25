@@ -35,14 +35,19 @@ export class AppComponent {
     }
     );
 
-    //this.profileService.getCards().subscribe((cards: CardItem[]) => {this.items = cards; });
+    this.profileService.getCards().subscribe((cards: CardItem[]) => {this.items = cards; });
   }
 
   registerWithGithub(): void {
     this.afAuth.auth.signInWithPopup(new firebase.auth.GithubAuthProvider()).then(console.warn);
   }
+
+  registerWithFacebook(): void {
+	this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()).then(console.warn);
+  }
   logout() {
-    this.afAuth.auth.signOut();
+	  this.profileService.deleteUserCard(this.user.email);
+	this.afAuth.auth.signOut();
   }
 }
 

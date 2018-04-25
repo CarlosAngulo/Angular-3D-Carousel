@@ -12,6 +12,7 @@ export class CardComponent implements OnInit {
   @Input() position: number;
   @Input() username: string;
   @Input() photo: string;
+  @Input() email: string;
   cardName: string;
 
   constructor() { }
