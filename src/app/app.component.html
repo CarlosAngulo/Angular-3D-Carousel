@@ -1,3 +1,8 @@
 <div class="carousel">
-  <app-carousel></app-carousel>
+  <app-carousel *ngIf="items?.lenght" [items]="items"></app-carousel>
+</div>
+
+<div class="login-actions">
+  <a *ngIf="!user" href="#" (click)="registerWithGithub()">Agrega mi foto usando github</a><br>
+  <a *ngIf="user" href="#" (click)="logout()">elimina mi foto</a>
 </div>

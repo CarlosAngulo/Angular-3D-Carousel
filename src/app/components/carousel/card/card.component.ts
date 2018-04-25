@@ -10,12 +10,14 @@ export class CardComponent implements OnInit {
   @Input() index: string;
   @Output() currentPosition: EventEmitter<number> = new EventEmitter<number>();
   @Input() position: number;
+  @Input() username: string;
+  @Input() photo: string;
   cardName: string;
 
   constructor() { }
 
   ngOnInit() {
-    this.cardName = 'Title ' + this.index;
+    this.cardName = this.username ? this.username : 'Title ' + this.index;
   }
 
   get cardPosition() {

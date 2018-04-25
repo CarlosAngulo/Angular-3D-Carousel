@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewChildren, QueryList, ViewContainerRef, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, QueryList, ViewContainerRef, ElementRef, AfterViewInit, Input } from '@angular/core';
 import { trigger, state, style, animate, transition, AnimationBuilder, AnimationPlayer } from '@angular/animations';
 import { CardComponent } from './card/card.component';
 
@@ -12,7 +12,7 @@ export class CarouselComponent implements AfterViewInit {
   @ViewChildren('withBuilder', {read: ElementRef}) elCards: QueryList<ElementRef>;
   @ViewChild('withBuilder', {read: ElementRef}) baseCard: ElementRef;
   @ViewChild('box', {read: ElementRef}) box: ElementRef;
-  items = new Array(8);
+  @Input() items = new Array(8);
   private speed = 400;
   private timing = this.speed + 'ms ease-out';
   private player: AnimationPlayer;
