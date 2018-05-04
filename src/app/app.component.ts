@@ -12,16 +12,7 @@ import { CardItem } from './shared/card-item.model';
 })
 
 export class AppComponent {
-  items: any[] = [
-    { title: 'Slide 1' },
-    { title: 'Slide 2' },
-    { title: 'Slide 3' },
-    { title: 'Slide 4' },
-    { title: 'Slide 5' },
-    { title: 'Slide 6' },
-    { title: 'Slide 7' },
-    { title: 'Slide 8' },
-  ];
+  users: any[] = new Array();
 
   user: firebase.User;
 
@@ -32,10 +23,13 @@ export class AppComponent {
         const cardItem = new CardItem(user.photoURL, user.displayName, user.email);
         profileService.addCard(cardItem);
       }
-    }
-    );
+    });
 
-    this.profileService.getCards().subscribe((cards: CardItem[]) => {this.items = cards; });
+    this.profileService.getCards().subscribe((cards: CardItem[]) => {
+      this.users = cards;
+      console.log(this.users);
+    });
+    
   }
 
   registerWithGithub(): void {

@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { environment } from '../environments/environment';
+import { CardsService } from './shared/cards.service';
 import { ProfileService } from './shared/profile.service';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 
@@ -22,18 +23,19 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
     CarouselComponent
   ],
   imports: [
-
     HttpModule,
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
-
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFirestoreModule,
     AngularFireAuthModule
   ],
-  providers: [ProfileService],
+  providers: [
+    ProfileService,
+    CardsService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

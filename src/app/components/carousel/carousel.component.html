@@ -3,9 +3,9 @@
     *ngFor="let item of items; let i = index" 
     [index]="i"
 	[position]="i"
-	[username]="item.displayName"
-	[photo]="item.photoUrl"
-	[email]="item.email"
+	[username]="users.displayName"
+	[photo]="users.photoUrl"
+	[email]="users.email"
     (click)="onCardClick(i)"
     (window:resize)="onResize($event)">
 </app-card>

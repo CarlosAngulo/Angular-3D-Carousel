@@ -6,11 +6,11 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: 'AIzaSyCb4BGQkcTOUcB_dFrRJ_x7NiueriipHuU',
-    authDomain: 'angular-circular-carousel.firebaseapp.com',
-    databaseURL: 'https://angular-circular-carousel.firebaseio.com/',
-    projectId: 'angular-circular-carousel',
-    storageBucket: 'angular-circular-carousel.appspot.com',
-    messagingSenderId: '241934210859'
+    apiKey: "AIzaSyA6gyTv38klhCOhGQwAzed9SK-C_EvGXk4",
+    authDomain: "ng-carousel.firebaseapp.com",
+    databaseURL: "https://ng-carousel.firebaseio.com",
+    projectId: "ng-carousel",
+    storageBucket: "ng-carousel.appspot.com",
+    messagingSenderId: "350810809502"
   }
 };

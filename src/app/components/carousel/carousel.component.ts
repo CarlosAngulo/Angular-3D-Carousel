@@ -1,18 +1,21 @@
 import { Component, OnInit, ViewChild, ViewChildren, QueryList, ViewContainerRef, ElementRef, AfterViewInit, Input } from '@angular/core';
 import { trigger, state, style, animate, transition, AnimationBuilder, AnimationPlayer } from '@angular/animations';
 import { CardComponent } from './card/card.component';
+import { CardsService } from '../../shared/cards.service';
 
 @Component({
   selector: 'app-carousel',
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.css']
 })
+
 export class CarouselComponent implements AfterViewInit {
   @ViewChildren('withBuilder') cards: QueryList<CardComponent>;
   @ViewChildren('withBuilder', {read: ElementRef}) elCards: QueryList<ElementRef>;
   @ViewChild('withBuilder', {read: ElementRef}) baseCard: ElementRef;
   @ViewChild('box', {read: ElementRef}) box: ElementRef;
-  @Input() items = new Array(8);
+  @Input() users;
+  private items = new Array(8);
   private speed = 400;
   private timing = this.speed + 'ms ease-out';
   private player: AnimationPlayer;
@@ -24,12 +27,23 @@ export class CarouselComponent implements AfterViewInit {
   private propCanvasCard = 0;
   private cardsArr = [];
 
-  constructor( private animationBuilder: AnimationBuilder, private elementRef: ElementRef) {
+  constructor(private animationBuilder: AnimationBuilder, private elementRef: ElementRef,  private cardService: CardsService) {
   }
-
+  
   ngAfterViewInit() {
     this.cardsArr = this.cards.toArray();
     this.proportions();
+    let that = this;
+    setTimeout(function(){that.populateCards()}, 600);
+  }
+  
+  private populateCards() {
+    console.log(this.cardService.getCards().length, this.items.length);
+    let serviceCounter = 0;
+    for ( let i = 0; i < this.items.length; i ++ ) {
+      this.cardsArr[i].username = this.cardService.getCards()[serviceCounter].displayName;
+      serviceCounter == this.cardService.getCards().length - 1 ? serviceCounter = 0 :  serviceCounter++;
+    }
   }
 
   private proportions() {
